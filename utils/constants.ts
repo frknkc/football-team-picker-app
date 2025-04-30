@@ -29,85 +29,85 @@ export const FIELD_POSITIONS: FieldPositions = {
   '6v6': {
     teamA: [
       // Goalkeeper
-      { x: 10, y: 50, position: 'Goalkeeper', team: 'teamA' },
+      { x: 50, y: 15, position: 'Goalkeeper', team: 'teamA' },
       // Defenders
-      { x: 25, y: 30, position: 'Defender', team: 'teamA' },
-      { x: 25, y: 70, position: 'Defender', team: 'teamA' },
+      { x: 30, y: 30, position: 'Defender', team: 'teamA' },
+      { x: 70, y: 30, position: 'Defender', team: 'teamA' },
       // Midfielders
-      { x: 40, y: 30, position: 'Midfielder', team: 'teamA' },
-      { x: 40, y: 70, position: 'Midfielder', team: 'teamA' },
+      { x: 30, y: 45, position: 'Midfielder', team: 'teamA' },
+      { x: 70, y: 45, position: 'Midfielder', team: 'teamA' },
       // Forward
-      { x: 55, y: 50, position: 'Forward', team: 'teamA' },
+      { x: 50, y: 35, position: 'Forward', team: 'teamA' },
     ],
     teamB: [
       // Goalkeeper
-      { x: 90, y: 50, position: 'Goalkeeper', team: 'teamB' },
+      { x: 50, y: 85, position: 'Goalkeeper', team: 'teamB' },
       // Defenders
-      { x: 75, y: 30, position: 'Defender', team: 'teamB' },
-      { x: 75, y: 70, position: 'Defender', team: 'teamB' },
+      { x: 30, y: 70, position: 'Defender', team: 'teamB' },
+      { x: 70, y: 70, position: 'Defender', team: 'teamB' },
       // Midfielders
-      { x: 60, y: 30, position: 'Midfielder', team: 'teamB' },
-      { x: 60, y: 70, position: 'Midfielder', team: 'teamB' },
+      { x: 30, y: 55, position: 'Midfielder', team: 'teamB' },
+      { x: 70, y: 55, position: 'Midfielder', team: 'teamB' },
       // Forward
-      { x: 45, y: 50, position: 'Forward', team: 'teamB' },
+      { x: 50, y: 65, position: 'Forward', team: 'teamB' },
     ],
   },
   '7v7': {
     teamA: [
       // Goalkeeper
-      { x: 10, y: 50, position: 'Goalkeeper', team: 'teamA' },
+      { x: 50, y: 15, position: 'Goalkeeper', team: 'teamA' },
       // Defenders
-      { x: 25, y: 25, position: 'Defender', team: 'teamA' },
-      { x: 25, y: 50, position: 'Defender', team: 'teamA' },
-      { x: 25, y: 75, position: 'Defender', team: 'teamA' },
+      { x: 25, y: 30, position: 'Defender', team: 'teamA' },
+      { x: 50, y: 30, position: 'Defender', team: 'teamA' },
+      { x: 75, y: 30, position: 'Defender', team: 'teamA' },
       // Midfielders
-      { x: 40, y: 35, position: 'Midfielder', team: 'teamA' },
-      { x: 40, y: 65, position: 'Midfielder', team: 'teamA' },
+      { x: 35, y: 45, position: 'Midfielder', team: 'teamA' },
+      { x: 65, y: 45, position: 'Midfielder', team: 'teamA' },
       // Forward
-      { x: 55, y: 50, position: 'Forward', team: 'teamA' },
+      { x: 50, y: 35, position: 'Forward', team: 'teamA' },
     ],
     teamB: [
       // Goalkeeper
-      { x: 90, y: 50, position: 'Goalkeeper', team: 'teamB' },
+      { x: 50, y: 85, position: 'Goalkeeper', team: 'teamB' },
       // Defenders
-      { x: 75, y: 25, position: 'Defender', team: 'teamB' },
-      { x: 75, y: 50, position: 'Defender', team: 'teamB' },
-      { x: 75, y: 75, position: 'Defender', team: 'teamB' },
+      { x: 25, y: 70, position: 'Defender', team: 'teamB' },
+      { x: 50, y: 70, position: 'Defender', team: 'teamB' },
+      { x: 75, y: 70, position: 'Defender', team: 'teamB' },
       // Midfielders
-      { x: 60, y: 35, position: 'Midfielder', team: 'teamB' },
-      { x: 60, y: 65, position: 'Midfielder', team: 'teamB' },
+      { x: 35, y: 55, position: 'Midfielder', team: 'teamB' },
+      { x: 65, y: 55, position: 'Midfielder', team: 'teamB' },
       // Forward
-      { x: 45, y: 50, position: 'Forward', team: 'teamB' },
+      { x: 50, y: 65, position: 'Forward', team: 'teamB' },
     ],
   },
   '8v8': {
     teamA: [
       // Goalkeeper
-      { x: 10, y: 50, position: 'Goalkeeper', team: 'teamA' },
+      { x: 50, y: 15, position: 'Goalkeeper', team: 'teamA' },
       // Defenders
-      { x: 25, y: 25, position: 'Defender', team: 'teamA' },
-      { x: 25, y: 50, position: 'Defender', team: 'teamA' },
-      { x: 25, y: 75, position: 'Defender', team: 'teamA' },
+      { x: 25, y: 30, position: 'Defender', team: 'teamA' },
+      { x: 50, y: 30, position: 'Defender', team: 'teamA' },
+      { x: 75, y: 30, position: 'Defender', team: 'teamA' },
       // Midfielders
-      { x: 40, y: 30, position: 'Midfielder', team: 'teamA' },
-      { x: 40, y: 50, position: 'Midfielder', team: 'teamA' },
-      { x: 40, y: 70, position: 'Midfielder', team: 'teamA' },
+      { x: 30, y: 45, position: 'Midfielder', team: 'teamA' },
+      { x: 50, y: 45, position: 'Midfielder', team: 'teamA' },
+      { x: 70, y: 45, position: 'Midfielder', team: 'teamA' },
       // Forward
-      { x: 55, y: 50, position: 'Forward', team: 'teamA' },
+      { x: 50, y: 35, position: 'Forward', team: 'teamA' },
     ],
     teamB: [
       // Goalkeeper
-      { x: 90, y: 50, position: 'Goalkeeper', team: 'teamB' },
+      { x: 50, y: 85, position: 'Goalkeeper', team: 'teamB' },
       // Defenders
-      { x: 75, y: 25, position: 'Defender', team: 'teamB' },
-      { x: 75, y: 50, position: 'Defender', team: 'teamB' },
-      { x: 75, y: 75, position: 'Defender', team: 'teamB' },
+      { x: 25, y: 70, position: 'Defender', team: 'teamB' },
+      { x: 50, y: 70, position: 'Defender', team: 'teamB' },
+      { x: 75, y: 70, position: 'Defender', team: 'teamB' },
       // Midfielders
-      { x: 60, y: 30, position: 'Midfielder', team: 'teamB' },
-      { x: 60, y: 50, position: 'Midfielder', team: 'teamB' },
-      { x: 60, y: 70, position: 'Midfielder', team: 'teamB' },
+      { x: 30, y: 55, position: 'Midfielder', team: 'teamB' },
+      { x: 50, y: 55, position: 'Midfielder', team: 'teamB' },
+      { x: 70, y: 55, position: 'Midfielder', team: 'teamB' },
       // Forward
-      { x: 45, y: 50, position: 'Forward', team: 'teamB' },
+      { x: 50, y: 65, position: 'Forward', team: 'teamB' },
     ],
   },
 };

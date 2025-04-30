@@ -10,9 +10,10 @@ export const generateId = (): string => {
 export const validatePlayerDistribution = (
   players: Player[],
   format: MatchFormat
-): boolean => {
+): { isValid: boolean; errors: string[] } => {
   const distribution = POSITION_DISTRIBUTION[format];
   const positions = Object.keys(distribution) as PlayerPosition[];
+  const errors: string[] = [];
 
   const counts: Record<PlayerPosition, number> = {
     Goalkeeper: 0,
@@ -25,9 +26,17 @@ export const validatePlayerDistribution = (
     counts[player.position]++;
   });
 
-  return positions.every((position) => {
-    return counts[position] >= distribution[position] * 2;
+  positions.forEach((position) => {
+    const required = distribution[position] * 2;
+    if (counts[position] < required) {
+      errors.push(`Not enough ${position}s. Required: ${required}, Available: ${counts[position]}`);
+    }
   });
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+  };
 };
 
 // Function to create balanced teams
@@ -89,9 +98,10 @@ export const generateTeams = (
   }
 
   // Distribute other positions
-  ['Defender', 'Midfielder', 'Forward'].forEach((position) => {
-    const positionPlayers = playersByPosition[position as PlayerPosition];
-    const count = distribution[position as PlayerPosition];
+  const positions: PlayerPosition[] = ['Defender', 'Midfielder', 'Forward'];
+  positions.forEach((position) => {
+    const positionPlayers = playersByPosition[position];
+    const count = distribution[position];
 
     // Create pairs of players with similar skill levels
     for (let i = 0; i < Math.min(count * 2, positionPlayers.length); i += 2) {
@@ -145,6 +155,11 @@ export const createMatch = (
   format: MatchFormat,
   players: Player[]
 ): Match => {
+  const validation = validatePlayerDistribution(players, format);
+  if (!validation.isValid) {
+    throw new Error(`Invalid player distribution: ${validation.errors.join(', ')}`);
+  }
+
   const { teamA, teamB } = generateTeams(players, format);
   
   return {

@@ -137,15 +137,21 @@ const CreateScreen = () => {
         if (!currentMatch) return null;
         return (
           <View style={styles.teamsContainer}>
-            <TeamDisplay
-              match={currentMatch}
-              onShare={handleShareMatch}
-              onReset={handleRegenerateTeams}
-              onSave={handleSaveMatch}
-              onBack={prevStep}
-            />
-            <ScrollView>
-              <FootballField match={currentMatch} />
+            <ScrollView 
+              style={styles.teamScrollView}
+              contentContainerStyle={styles.teamScrollContent}
+              showsVerticalScrollIndicator={false}
+            >
+              <TeamDisplay
+                match={currentMatch}
+                onShare={handleShareMatch}
+                onReset={handleRegenerateTeams}
+                onSave={handleSaveMatch}
+                onBack={prevStep}
+              />
+              <View style={styles.fieldWrapper}>
+                <FootballField match={currentMatch} />
+              </View>
             </ScrollView>
           </View>
         );
@@ -197,10 +203,7 @@ const CreateScreen = () => {
   };
 
   return (
-    <Animated.View 
-      entering={FadeIn.duration(500)}
-      style={styles.container}
-    >
+    <View style={styles.container}>
       {step !== 'teams' && (
         <View style={styles.header}>
           <Text style={styles.title}>
@@ -213,7 +216,7 @@ const CreateScreen = () => {
       {renderStepContent()}
       
       {renderNextButton()}
-    </Animated.View>
+    </View>
   );
 };
 
@@ -260,45 +263,48 @@ const styles = StyleSheet.create({
   },
   playersContainer: {
     flex: 1,
+    padding: 16,
   },
   teamsContainer: {
     flex: 1,
   },
+  teamScrollView: {
+    flex: 1,
+  },
+  teamScrollContent: {
+    flexGrow: 1,
+    paddingBottom: 100, // Space for buttons
+  },
+  fieldWrapper: {
+    paddingHorizontal: 16,
+    paddingBottom: 20,
+  },
   nextButton: {
     position: 'absolute',
     bottom: 20,
+    left: 20,
     right: 20,
     backgroundColor: '#4c9eeb',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 30,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
+    justifyContent: 'center',
+    padding: 16,
+    borderRadius: 8,
+    gap: 8,
+    zIndex: 1000, // Ensure button is above other content
   },
   nextButtonText: {
     color: '#fff',
     fontFamily: 'Inter-SemiBold',
     fontSize: 16,
-    marginRight: 8,
   },
   addPlayerButton: {
-    position: 'absolute',
-    bottom: 80,
-    right: 20,
     backgroundColor: '#4caf50',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 30,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 80, // Space for next button
   },
   addPlayerButtonText: {
     color: '#fff',

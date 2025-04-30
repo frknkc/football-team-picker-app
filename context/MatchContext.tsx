@@ -13,8 +13,10 @@ interface MatchContextType {
   currentMatch: Match | null;
   generateMatch: () => void;
   savedMatches: Match[];
-  saveMatch: (match: Match) => void;
-  deleteMatch: (matchId: string) => void;
+  saveMatch: (match: Match) => Promise<void>;
+  deleteMatch: (matchId: string) => Promise<void>;
+  error: string | null;
+  clearError: () => void;
 }
 
 const MatchContext = createContext<MatchContextType | undefined>(undefined);
@@ -32,6 +34,7 @@ export const MatchProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [players, setPlayers] = useState<Player[]>([]);
   const [currentMatch, setCurrentMatch] = useState<Match | null>(null);
   const [savedMatches, setSavedMatches] = useState<Match[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   // Load saved matches from storage
   useEffect(() => {
@@ -48,6 +51,7 @@ export const MatchProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           setSavedMatches(matches);
         }
       } catch (error) {
+        setError('Failed to load saved matches. Please try again.');
         console.error('Error loading saved matches:', error);
       }
     };
@@ -69,11 +73,18 @@ export const MatchProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const removePlayer = (playerId: string) => {
     setPlayers(players.filter((player) => player.id !== playerId));
+    // Reset current match when a player is removed
+    setCurrentMatch(null);
   };
 
   const generateMatch = () => {
-    const match = createMatch(currentFormat, players);
-    setCurrentMatch(match);
+    try {
+      const match = createMatch(currentFormat, players);
+      setCurrentMatch(match);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to generate match');
+    }
   };
 
   const saveMatch = async (match: Match) => {
@@ -81,7 +92,9 @@ export const MatchProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const updatedMatches = [...savedMatches, match];
       setSavedMatches(updatedMatches);
       await AsyncStorage.setItem('savedMatches', JSON.stringify(updatedMatches));
+      setError(null);
     } catch (error) {
+      setError('Failed to save match. Please try again.');
       console.error('Error saving match:', error);
     }
   };
@@ -91,9 +104,15 @@ export const MatchProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const updatedMatches = savedMatches.filter((match) => match.id !== matchId);
       setSavedMatches(updatedMatches);
       await AsyncStorage.setItem('savedMatches', JSON.stringify(updatedMatches));
+      setError(null);
     } catch (error) {
+      setError('Failed to delete match. Please try again.');
       console.error('Error deleting match:', error);
     }
+  };
+
+  const clearError = () => {
+    setError(null);
   };
 
   return (
@@ -110,6 +129,8 @@ export const MatchProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         savedMatches,
         saveMatch,
         deleteMatch,
+        error,
+        clearError,
       }}
     >
       {children}

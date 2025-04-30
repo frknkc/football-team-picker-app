@@ -1,25 +1,40 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image, Platform } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, Text, StyleSheet, Dimensions, Image, Platform, ScrollView } from 'react-native';
 import { Match, Player, FieldPosition } from '../types';
 import { FIELD_POSITIONS, POSITION_COLORS, TEAM_COLORS } from '../utils/constants';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface FootballFieldProps {
   match: Match;
 }
 
 const FootballField: React.FC<FootballFieldProps> = ({ match }) => {
+  const insets = useSafeAreaInsets();
   const fieldPositions = FIELD_POSITIONS[match.format];
   
+  // Create a map of assigned players to avoid duplicates
+  const assignedPlayers = useMemo(() => new Set<string>(), [match]);
+
   const findPlayerForPosition = (
     position: FieldPosition,
     team: 'teamA' | 'teamB'
   ): Player | undefined => {
     const teamPlayers = team === 'teamA' ? match.teamA.players : match.teamB.players;
-    const exactPositionPlayers = teamPlayers.filter(
-      (p) => p.position === position.position
+    
+    // Find players matching the position who haven't been assigned yet
+    const availablePlayers = teamPlayers.filter(
+      (p) => p.position === position.position && !assignedPlayers.has(p.id)
     );
-    return exactPositionPlayers[0];
+
+    if (availablePlayers.length > 0) {
+      // Get the first available player
+      const player = availablePlayers[0];
+      assignedPlayers.add(player.id);
+      return player;
+    }
+
+    return undefined;
   };
 
   const renderPlayer = (position: FieldPosition, index: number) => {
@@ -31,7 +46,7 @@ const FootballField: React.FC<FootballFieldProps> = ({ match }) => {
     
     return (
       <Animated.View
-        key={`${position.team}-${index}`}
+        key={`${position.team}-${player.id}`}
         entering={FadeIn.delay(100 * index).duration(500)}
         style={[
           styles.playerMarker,
@@ -51,6 +66,9 @@ const FootballField: React.FC<FootballFieldProps> = ({ match }) => {
       </Animated.View>
     );
   };
+
+  // Reset assigned players before rendering
+  assignedPlayers.clear();
 
   const calculateTeamAverage = (team: 'teamA' | 'teamB') => {
     const players = team === 'teamA' ? match.teamA.players : match.teamB.players;
@@ -113,12 +131,9 @@ const fieldHeight = fieldWidth * 1.4;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#f5f5f5',
-    paddingBottom: 100, // Add padding to avoid overlap with buttons
   },
   teamsContainer: {
-    paddingHorizontal: 16,
     marginVertical: 10,
   },
   teamSection: {
@@ -184,11 +199,26 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 20,
     position: 'relative',
+    backgroundColor: '#4a8f29',
+    borderRadius: 8,
+    overflow: 'hidden',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   fieldImage: {
     width: '100%',
     height: '100%',
     position: 'absolute',
+    opacity: 0.9,
   },
   playersOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -218,6 +248,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: 'center',
     minWidth: 80,
+    zIndex: 20,
   },
   playerName: {
     color: '#fff',
