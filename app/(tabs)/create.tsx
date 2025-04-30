@@ -142,15 +142,37 @@ const CreateScreen = () => {
               contentContainerStyle={styles.teamScrollContent}
               showsVerticalScrollIndicator={false}
             >
-              <TeamDisplay
-                match={currentMatch}
-                onShare={handleShareMatch}
-                onReset={handleRegenerateTeams}
-                onSave={handleSaveMatch}
-                onBack={prevStep}
-              />
               <View style={styles.fieldWrapper}>
-                <FootballField match={currentMatch} />
+                <FootballField 
+                  key={currentMatch.id}
+                  match={currentMatch} 
+                />
+              </View>
+              <View style={styles.actionButtons}>
+                <TouchableOpacity
+                  style={[styles.actionButton, styles.backButton]}
+                  onPress={prevStep}
+                >
+                  <Text style={styles.actionButtonText}>Back</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.actionButton, styles.regenerateButton]}
+                  onPress={handleRegenerateTeams}
+                >
+                  <Text style={styles.actionButtonText}>Regenerate</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.actionButton, styles.saveButton]}
+                  onPress={handleSaveMatch}
+                >
+                  <Text style={styles.actionButtonText}>Save</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.actionButton, styles.shareButton]}
+                  onPress={handleShareMatch}
+                >
+                  <Text style={styles.actionButtonText}>Share</Text>
+                </TouchableOpacity>
               </View>
             </ScrollView>
           </View>
@@ -310,6 +332,37 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Inter-SemiBold',
     fontSize: 16,
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingBottom: 20,
+    gap: 8,
+  },
+  actionButton: {
+    flex: 1,
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  actionButtonText: {
+    color: '#fff',
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 14,
+  },
+  backButton: {
+    backgroundColor: '#666',
+  },
+  regenerateButton: {
+    backgroundColor: '#4c9eeb',
+  },
+  saveButton: {
+    backgroundColor: '#4caf50',
+  },
+  shareButton: {
+    backgroundColor: '#ff9800',
   },
 });
 
